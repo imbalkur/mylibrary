@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&family=Open+Sans:wght@300;400;500;700;800&family=Poppins:wght@200;300;400;500;600;800;900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1.5px;
+    font-size: .9rem;
+}
+
+body {
+    background: rgb(65, 0, 65);
+    color: white;
+}
+
+.content {
+    padding: 1rem 5rem 10rem 5rem;
+    /* margin: auto; */
+}
+
+.content h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 2rem;
+}
+
+table, th, td {
+    /* border: 1px solid white; */
+    border-collapse: collapse;
+}
+
+th {
+    background: rgb(42, 0, 42);
+}
+
+td {
+    background: rgb(53, 0, 53);
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+table {
+    width: 90%;
+    margin: 3rem auto;
+    text-align: center;
+    box-shadow: 5px 5px 5px black;
+}
+
+th , td{
+    padding: .6rem;
+}
+
+table button {
+    padding: 5px 15px;
+    /* font-size: .9rem; */
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+}
+
+table .removeBtn {
+    background: red;
+    color: aliceblue;
+    font-weight: 800;
+}
+
+table .updateReadStatus{
+    background: rgb(197, 161, 0);
+}
+
+form {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    /* border: 1px solid white; */
+    padding: 1rem;
+    background: rgba(255, 255, 255, .5);
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px black;
+}
+
+form input[type="text"], form input[type="number"] {
+    padding: .8rem;
+    background: rgba(255, 255, 255, .4);
+    border: none;
+    border-radius: 10px;
+    margin-right: 1rem;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    /* max-width: 40%; */
+}
+
+form input[type="button"] {
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+form ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+.content .warning {
+    text-align: center;
+    font-style: italic;
+    margin: 1rem;
+    position: absolute;
+    width: 90%;
+    /* left: 45%; */
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Library</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="content">
+        <h1>My Library</h1>
+        
+        <form action="">
+            <!-- <label for="titleinput">Book Title</label> -->
+            <input type="text" class="titleinput" value="" placeholder="Book Title" required>
+            <!-- <label for="authorinput"> Book Author</label> -->
+            <input type="text" class="authorinput" value="" placeholder="Book Author" required>
+            <!-- <label for="pagesinput">No. of pages</label> -->
+            <input type="number" class="pagesinput" value="" placeholder="No. of pages" required>
+            <label for="readinput">Is Read</label>
+            <input type="checkbox" class="readinput" id="" checked>
+            <input type="button" class="addBook" onclick="addBookToLibrary" value="Add New Book">
+        </form> 
+        <p class="warning"></p>
+
+        <table class="books"></table>
+    </div>
+    
+    <script>
+
+        const books = document.querySelector('.books');
+        const addBookBtn = document.querySelector('.addBook');
+        
+        // default
+        let myLibrary = JSON.parse(localStorage.getItem("library")) || [{title: 'Harry Potter', author: 'J.K Rowling', npages: '354', isread: true},
+        {title: 'Alchemist', author: 'Paula Coelho', npages: '300', isread: false}];
+        
+        function Book(title, author, npages, isread) {
+            this.title = title,
+            this.author = author,
+            this.npages = npages,
+            this.isread = isread/* ,
+            this.info = function() {
+                return "" + this.title + " by " + this.author + ", " + npages + " pages, " + this.isread() + "";
+            } */
+        }
+
+        function isRead(read) {
+            if (read) {
+                return "Yes";
+            }
+            else {
+                return "No";
+            }
+        }
+
+        function addBookToLibrary() {
+            // const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", "295", false);
+            let titleinput = document.querySelector('.titleinput').value;
+            // console.log(titleinput)
+            let authorinput = document.querySelector('.authorinput').value;
+            let pagesinput = document.querySelector('.pagesinput').value;
+            let readinput = document.querySelector('.readinput').checked;
+            const warning = document.querySelector('.warning');
+
+            if (titleinput == '' || authorinput == '' || pagesinput == '') {
+                warning.innerHTML = "All fields are mandatory";
+                return;
+            }
+            else {
+                warning.innerHTML = '';
+            }
+
+            const theHobbit = new Book(titleinput, authorinput, pagesinput, readinput);
+            myLibrary.push(theHobbit);
+            localStorage.setItem('library', JSON.stringify(myLibrary));
+            
+            document.querySelector('form').reset(); // form reset
+            displayBooks()
+        }
+
+        function removeBook(item) {
+            var index = item.getAttribute('data-id') - 1;
+            // console.log(index)
+            myLibrary.splice(index, 1);
+            localStorage.setItem('library', JSON.stringify(myLibrary));
+            displayBooks();
+        }
+
+        function updateReadStatus(item) {
+            console.log(item);
+            var index = item.getAttribute('data-id') - 1;
+            myLibrary[index].isread = !myLibrary[index].isread;
+            localStorage.setItem('library', JSON.stringify(myLibrary));
+            displayBooks();
+        }
+
+        function displayBooks() {
+            var i=1;
+            books.innerHTML = `
+                <tr>
+                    <th>Sr. No</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>No. of Pages</th>
+                    <th>Is read</th>
+                    <th></th>
+                    <th></th>
+                </tr>`;
+            books.innerHTML += myLibrary
+                .map(book => `<tr>
+                        <td>${i++}</td>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.npages}</td>
+                        <td>${isRead(book.isread)}</td>
+                        <td><button class="updateReadStatus" data-id="${i-1}">Change Read Status</button></td>
+                        <td><button class="removeBtn" data-id="${i-1}">Delete</button></td>
+                    </tr>`)
+                .join("");
+
+            // Delete book
+            const removeBtn = document.querySelectorAll('.removeBtn');
+            removeBtn.forEach(btn => btn.addEventListener('click', removeBook.bind(null, btn), false));
+
+            // Update book read status
+            const readBtn = document.querySelectorAll('.updateReadStatus');
+            readBtn.forEach(btn => btn.addEventListener('click', updateReadStatus.bind(null, btn), false));
+        }
+
+        addBookBtn.addEventListener('click', addBookToLibrary)
+        displayBooks()
+
+        // const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", "295", false);
+        // console.log(theHobbit.info());
+        // The Hobbit by J.R.R. Tolkien, 295 pages, not read yet
+        
+    </script>
+</body>
+</html>
